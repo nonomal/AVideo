@@ -19,6 +19,7 @@ var _serverTime;
 var _serverDBTime;
 var _serverTimeString;
 var _serverDBTimeString;
+let deferredPrompt;
 
 $(document).mousemove(function (e) {
     mouseX = e.pageX;
@@ -334,6 +335,10 @@ function secondsToStr(seconds, level) {
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
+}
+
+function isEmailValid(email) {
+    return validateEmail(email);
 }
 
 function subscribe(email, user_id) {
@@ -725,7 +730,9 @@ function playNext(url) {
                     console.log(response);
                     if (!response || response.error) {
                         console.log("playNext ajax fail");
-                        //document.location = url;
+                        if (response.url) {
+                            //document.location = response.url;
+                        }
                     } else {
                         console.log("playNext ajax success");
                         $('topInfo').hide();
@@ -886,7 +893,7 @@ function setCurrentTime(currentTime) {
 }
 
 function isALiveContent() {
-    if (typeof isLive !== 'undefined' && isLive && (typeof isOnlineLabel === 'undefined' || isOnlineLabel===true)) {
+    if (typeof isLive !== 'undefined' && isLive && (typeof isOnlineLabel === 'undefined' || isOnlineLabel === true)) {
         return true;
     }
     return false;
@@ -958,11 +965,11 @@ function checkAutoPlay() {
     if (isAutoplayEnabled()) {
         $("#autoplay").prop('checked', true);
         $('.autoplay-button').addClass('checked');
-        avideoTooltip(".autoplay-button","Autoplay is ON");
-    }else{
+        avideoTooltip(".autoplay-button", "Autoplay is ON");
+    } else {
         $("#autoplay").prop('checked', false);
         $('.autoplay-button').removeClass('checked');
-        avideoTooltip(".autoplay-button","Autoplay is OFF");
+        avideoTooltip(".autoplay-button", "Autoplay is OFF");
     }
     showAutoPlayVideoDiv();
 }
@@ -1162,11 +1169,36 @@ function countTo(selector, total) {
 if (typeof showPleaseWaitTimeOut == 'undefined') {
     var showPleaseWaitTimeOut = 0;
 }
+
+var tabsCategoryDocumentHeight = 0;
+function tabsCategoryDocumentHeightChanged() {
+    var newHeight = $(document).height();
+    if (tabsCategoryDocumentHeight !== newHeight) {
+        tabsCategoryDocumentHeight = newHeight;
+        return true;
+    }
+    return false;
+}
+
 $(document).ready(function () {
     Cookies.set('timezone', Intl.DateTimeFormat().resolvedOptions().timeZone, {
         path: '/',
         expires: 365
     });
+
+    tabsCategoryDocumentHeight = $(document).height();
+    if (typeof $('.nav-tabs-horizontal').scrollingTabs == 'function') {
+        $('.nav-tabs-horizontal').scrollingTabs();
+        //$('.nav-tabs-horizontal').fadeIn();
+    }
+    setInterval(function () {
+        if (tabsCategoryDocumentHeightChanged()) {
+            if (typeof $('.nav-tabs-horizontal').scrollingTabs == 'function') {
+                $('.nav-tabs-horizontal').scrollingTabs('refresh');
+            }
+        }
+    }, 1000);
+
     modal = modal || (function () {
         var pleaseWaitDiv = $("#pleaseWaitDialog");
         if (pleaseWaitDiv.length === 0) {
@@ -1340,6 +1372,25 @@ $(document).ready(function () {
         checkAutoPlay();
     });
     checkAutoPlay();
+
+    // Code to handle install prompt on desktop
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+        var beforeinstallprompt = Cookies.get('beforeinstallprompt');
+        if (beforeinstallprompt) {
+            return false;
+        }
+        var msg = "<a href='#' onclick='A2HSInstall();'><img src='" + $('[rel="apple-touch-icon"]').attr('href') + "' class='img img-responsive pull-left' style='max-width: 20px; margin-right:5px;'> Add To Home Screen </a>";
+        var options = {text: msg, hideAfter: 20000};
+        $.toast(options);
+        Cookies.set('beforeinstallprompt', 1, {
+            path: '/',
+            expires: 365
+        });
+    });
 });
 
 function validURL(str) {
@@ -1653,7 +1704,7 @@ function avideoAjax(url, data) {
                 avideoAlertError(response.msg);
             } else {
                 avideoToastSuccess(response.msg);
-                if(typeof response.eval !== 'undefined'){
+                if (typeof response.eval !== 'undefined') {
                     eval(response.eval);
                 }
             }

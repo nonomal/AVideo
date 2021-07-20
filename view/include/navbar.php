@@ -278,6 +278,12 @@ if(!empty($_GET['avideoIframe'])){ // comes from avideoModalIframe(url) javascri
     ?>
 </style>
 <?php
+if(!empty($customizePluginDescription)){
+    echo "<h1 class='hidden metaDescription'>{$customizePluginDescription}</h1>";
+}else 
+if(!empty($metaDescription)){
+    echo "<h1 class='hidden metaDescription'>{$metaDescription}</h1>";
+}
 if (!User::isLogged() && !empty($advancedCustomUser->userMustBeLoggedIn) && !empty($advancedCustomUser->userMustBeLoggedInCloseButtonURL)) {
     ?>
     <nav class="navbar navbar-default navbar-fixed-top " id="mainNavBar">
@@ -1232,7 +1238,7 @@ if (!User::isLogged() && !empty($advancedCustomUser->userMustBeLoggedIn) && !emp
                             }
                             //$parsed_cats[] = $value['id'];
                             echo '<li class="navsub-toggle ' . ($value['clean_name'] == @$_GET['catName'] ? "active" : "") . '">'
-                            . '<a href="' . $global['webSiteRootURL'] . 'cat/' . $value['clean_name'] . '" >';
+                            . '<a href="' . Category::getCategoryLinkFromName( $value['clean_name']) . '" >';
                             echo '<span class="' . (empty($value['iconClass']) ? "fa fa-folder" : $value['iconClass']) . '"></span>  ' . __($value['name']);
                             if (empty($advancedCustom->hideCategoryVideosCount)) {
                                 echo ' <span class="badge">' . $total . '</span>';
@@ -1398,5 +1404,6 @@ if (!User::isLogged() && !empty($advancedCustomUser->userMustBeLoggedIn) && !emp
 } else if ($thisScriptFile["basename"] !== 'user.php' && empty($advancedCustom->disableNavbar)) {
     
 }
+echo '<!-- navBarAfter start -->', AVideoPlugin::navBarAfter(), '<!-- navBarAfter end -->';
 unset($_GET['parentsOnly']);
 ?>

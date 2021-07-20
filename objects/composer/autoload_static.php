@@ -23,8 +23,8 @@ class ComposerStaticInit78837c7a9c090d873268c14c1a5daf3d
         'b067bc7112e384b61c701452d53a14a8' => __DIR__ . '/..' . '/mtdowling/jmespath.php/src/JmesPath.php',
         '8a9dc1de0ca7e01f3e08231539562f61' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/functions.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
-        '3be16222a6efa6dd226a219eaaff823b' => __DIR__ . '/..' . '/ratchet/pawl/src/functions_include.php',
         'a8d3953fd9959404dd22d3dfcd0a79f0' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
+        '3be16222a6efa6dd226a219eaaff823b' => __DIR__ . '/..' . '/ratchet/pawl/src/functions_include.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -41,6 +41,7 @@ class ComposerStaticInit78837c7a9c090d873268c14c1a5daf3d
             'Symfony\\Polyfill\\Intl\\Idn\\' => 26,
             'Symfony\\Component\\Routing\\' => 26,
             'Symfony\\Component\\HttpFoundation\\' => 33,
+            'Sample\\' => 7,
         ),
         'R' => 
         array (
@@ -60,6 +61,9 @@ class ComposerStaticInit78837c7a9c090d873268c14c1a5daf3d
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Cache\\' => 10,
+            'PaypalPayoutsSDK\\' => 17,
+            'PayPalHttp\\' => 11,
+            'PayPalCheckoutSdk\\' => 18,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' => 
@@ -85,6 +89,10 @@ class ComposerStaticInit78837c7a9c090d873268c14c1a5daf3d
         'F' => 
         array (
             'Firebase\\JWT\\' => 13,
+        ),
+        'E' => 
+        array (
+            'Emojione\\' => 9,
         ),
         'B' => 
         array (
@@ -128,6 +136,11 @@ class ComposerStaticInit78837c7a9c090d873268c14c1a5daf3d
         'Symfony\\Component\\HttpFoundation\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/http-foundation',
+        ),
+        'Sample\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples',
+            1 => __DIR__ . '/..' . '/paypal/paypal-payouts-sdk/samples',
         ),
         'React\\Stream\\' => 
         array (
@@ -181,6 +194,18 @@ class ComposerStaticInit78837c7a9c090d873268c14c1a5daf3d
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
+        'PaypalPayoutsSDK\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paypal/paypal-payouts-sdk/lib/PaypalPayoutsSDK',
+        ),
+        'PayPalHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paypal/paypalhttp/lib/PayPalHttp',
+        ),
+        'PayPalCheckoutSdk\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk',
+        ),
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
@@ -221,6 +246,10 @@ class ComposerStaticInit78837c7a9c090d873268c14c1a5daf3d
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
+        'Emojione\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/emojione/emojione/lib/php/src',
+        ),
         'BackblazeB2\\' => 
         array (
             0 => __DIR__ . '/..' . '/gliterd/backblaze-b2/src',
@@ -232,6 +261,13 @@ class ComposerStaticInit78837c7a9c090d873268c14c1a5daf3d
     );
 
     public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'PayPal' => 
+            array (
+                0 => __DIR__ . '/..' . '/paypal/rest-api-sdk-php/lib',
+            ),
+        ),
         'H' => 
         array (
             'HTMLPurifier' => 

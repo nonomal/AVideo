@@ -28,6 +28,7 @@
             </script>
         </span>
         <?php
+        include $global['systemRootPath'] . 'plugin/Live/webRTC.php';
         if (Live::canStreamWithMeet()) {
             include $global['systemRootPath'] . 'plugin/Live/meet.php';
         }
@@ -35,6 +36,7 @@
     </div>
     <div class="panel-body">          
         <div class="embed-responsive embed-responsive-16by9">
+            <div id="divWebcamIFrame"><iframe src="about:blank" style="width: 100%; height: 100%;" allowusermedia allow="feature_name allow_list;feature_name allow_list;camera *;microphone *"></iframe></div> 
             <?php
             if (Live::canStreamWithMeet()) {
                 ?>
@@ -53,7 +55,7 @@
             </video>
         </div>
     </div>
-    <div class="panel-footer">
+    <div class="panel-footer clearfix" id="liveFooterPanel">
         <?php
         echo Live::getAllControlls($liveStreamObject2->getKeyWithIndex(true, true));
         ?>

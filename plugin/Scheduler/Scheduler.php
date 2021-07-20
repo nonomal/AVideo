@@ -7,7 +7,9 @@ require_once $global['systemRootPath'] . 'plugin/Scheduler/Objects/Scheduler_com
 class Scheduler extends PluginAbstract {
 
     public function getDescription() {
+        global $global;
         $desc = "Scheduler Plugin";
+        $desc .= "<br>Crontab every 1 minute<br><code>* * * * * php {$global['systemRootPath']}plugin/Scheduler/run.php</code>";
         //$desc .= $this->isReadyLabel(array('YPTWallet'));
         return $desc;
     }
@@ -82,10 +84,13 @@ class Scheduler extends PluginAbstract {
 
     
     static public function add($date_to_execute, $callbackURL){
+        _error_log("Scheduler::add [$date_to_execute] [$callbackURL]");
         if(empty($date_to_execute)){
+            _error_log("Scheduler::add ERROR date_to_execute is empty");
             return false;
         }
         if(empty($callbackURL)){
+            _error_log("Scheduler::add ERROR callbackURL is empty");
             return false;
         }
         $e = new Scheduler_commands(0);

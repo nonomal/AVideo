@@ -1,17 +1,17 @@
 <?php
-echo "<!-- OpenGraph -->";
+echo PHP_EOL."<!-- OpenGraph -->".PHP_EOL;
 if (empty($videos_id)) {
-    echo "<!-- OpenGraph no video id -->";
+    echo PHP_EOL."<!-- OpenGraph no video id -->".PHP_EOL;
     if (!empty($_GET['videoName'])) {
-        echo "<!-- OpenGraph videoName {$_GET['videoName']} -->";
+        echo PHP_EOL."<!-- OpenGraph videoName {$_GET['videoName']} -->".PHP_EOL;
         $video = Video::getVideoFromCleanTitle($_GET['videoName']);
     }
 } else {
-    echo "<!-- OpenGraph videos_id {$videos_id} -->";
+    echo PHP_EOL."<!-- OpenGraph videos_id {$videos_id} -->".PHP_EOL;
     $video = Video::getVideoLight($videos_id);
 }
 if (empty($video)) {
-    echo "<!-- OpenGraph no video -->";
+    echo PHP_EOL."<!-- OpenGraph no video -->".PHP_EOL;
     return false;
 }
 $videos_id = $video['id'];
@@ -45,6 +45,7 @@ if (!empty($images->posterPortrait) && basename($images->posterPortrait) !== 'no
 $twitter_site = $advancedCustom->twitter_site;
 $title = _substr(html2plainText($video['title']), 0,55);
 $description = _substr(html2plainText($video['description']), 0,155);
+$ogURL = Video::getLinkToVideo($videos_id);
 ?>
 <link rel="image_src" href="<?php echo $img; ?>" />
 <meta property="og:image" content="<?php echo $img; ?>" />
@@ -56,8 +57,9 @@ $description = _substr(html2plainText($video['description']), 0,155);
 <meta property="fb:app_id"             content="774958212660408" />
 <meta property="og:title"              content="<?php echo $title; ?>" />
 <meta property="og:description"        content="<?php echo $description; ?>" />
-<meta property="og:url"                content="<?php echo Video::getLinkToVideo($videos_id); ?>" />
+<meta property="og:url"                content="<?php echo $ogURL; ?>" />
 <meta property="og:type"               content="video.other" />
+<link rel=”canonical” href=”<?php echo $ogURL; ?>” />
 
 <?php
 $source = Video::getHigestResolution($video['filename']);

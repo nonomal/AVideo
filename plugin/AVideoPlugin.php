@@ -695,7 +695,7 @@ class AVideoPlugin {
         }
     }
 
-    public function getModeLive($key) {
+    public static function getModeLive($key) {
         $plugins = Plugin::getAllEnabled();
         foreach ($plugins as $value) {
             self::YPTstart();
@@ -707,7 +707,7 @@ class AVideoPlugin {
         }
     }
 
-    public function getModeLiveLink($liveLink_id) {
+    public static function getModeLiveLink($liveLink_id) {
         $plugins = Plugin::getAllEnabled();
         foreach ($plugins as $value) {
             self::YPTstart();
@@ -934,6 +934,21 @@ class AVideoPlugin {
             $p = static::loadPlugin($value['dirName']);
             if (is_object($p)) {
                 $navBarButtons .= $p->navBar();
+            }
+            self::YPTend("{$value['dirName']}::" . __FUNCTION__);
+        }
+        return $navBarButtons;
+    }
+
+    public static function navBarAfter() {
+        $plugins = Plugin::getAllEnabled();
+        $userOptions = array();
+        $navBarButtons = "";
+        foreach ($plugins as $value) {
+            self::YPTstart();
+            $p = static::loadPlugin($value['dirName']);
+            if (is_object($p)) {
+                $navBarButtons .= $p->navBarAfter();
             }
             self::YPTend("{$value['dirName']}::" . __FUNCTION__);
         }
@@ -1933,6 +1948,19 @@ class AVideoPlugin {
         return;
     }
 
+    public static function getWalletConfigurationHTML($users_id, $wallet, $walletDataObject) {
+        $plugins = Plugin::getAllEnabled();
+        foreach ($plugins as $value) {
+            self::YPTstart();
+            $p = static::loadPlugin($value['dirName']);
+            if (is_object($p)) {
+                $p->getWalletConfigurationHTML($users_id, $wallet, $walletDataObject);
+            }
+            self::YPTend("{$value['dirName']}::" . __FUNCTION__);
+        }
+        return;
+    }
+    
     public static function onVideoSetOnly_for_paid($video_id, $oldValue, $newValue) {
         $plugins = Plugin::getAllEnabled();
         foreach ($plugins as $value) {

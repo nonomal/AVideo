@@ -1806,6 +1806,7 @@ function convertImage($originalImage, $outputImage, $quality) {
 }
 
 function decideMoveUploadedToVideos($tmp_name, $filename, $type = "video") {
+    if($filename == '.zip'){return false;}
     global $global;
     $obj = new stdClass();
     $aws_s3 = AVideoPlugin::loadPluginIfEnabled('AWS_S3');
@@ -1900,11 +1901,11 @@ function unzipDirectory($filename, $destination) {
 }
 
 function make_path($path) {
-    if (substr($path, -1) !== '/') {
+    if (substr($path, -1) !== DIRECTORY_SEPARATOR) {
         $path = pathinfo($path, PATHINFO_DIRNAME);
     }
     if (!is_dir($path)) {
-        @mkdir($path, 0755, true);
+        mkdir($path, 0755, true);
     }
 }
 
@@ -2937,6 +2938,9 @@ function object_to_array($obj) {
 
 function allowOrigin() {
     global $global;
+    if (!headers_sent()) {
+        header_remove('Access-Control-Allow-Origin');
+    }
     if (empty($_SERVER['HTTP_ORIGIN'])) {
         $server = parse_url($global['webSiteRootURL']);
         header('Access-Control-Allow-Origin: ' . $server["scheme"] . '://imasdk.googleapis.com');
@@ -3743,6 +3747,7 @@ function getUsageFromFilename($filename, $dir = "") {
     $filesProcessed = array();
     if (empty($files)) {
         _error_log("getUsageFromFilename: we did not find any file for {$dir}{$filename}, we will create a fake one " . json_encode(debug_backtrace()));
+        make_path($dir);
         file_put_contents("{$dir}{$filename}.notfound", time());
         $totalSize = 10;
     } else {
@@ -3972,7 +3977,9 @@ function encrypt_decrypt($string, $action) {
     while (strlen($secret_iv) < 16) {
         $secret_iv .= $global['systemRootPath'];
     }
-
+    if(empty($secret_iv)){
+        $secret_iv = '1234567890abcdef';
+    }
     // hash
     $key = hash('sha256', $global['salt']);
 
@@ -4167,6 +4174,14 @@ function isEmbed() {
     return !empty($isEmbed);
 }
 
+function isWebRTC() {
+    global $isWebRTC, $global;
+    if (!empty($global['doNotLoadPlayer'])) {
+        return false;
+    }
+    return !empty($isWebRTC);
+}
+
 function isLive() {
     global $isLive, $global;
     if (!empty($global['doNotLoadPlayer'])) {
@@ -4216,6 +4231,9 @@ function setLiveKey($key, $live_servers_id, $live_index = '') {
 }
 
 function isVideoPlayerHasProgressBar() {
+    if(isWebRTC()){
+        return false;
+    }
     if (isLive()) {
         $obj = AVideoPlugin::getObjectData('Live');
         if (empty($obj->disableDVR)) {
@@ -4308,6 +4326,7 @@ function getVideos_id() {
         setVideos_id($videos_id);
     }
     if (empty($videos_id) && !empty($_REQUEST['playlists_id'])) {
+        AVideoPlugin::loadPlugin('PlayLists');
         $video = PlayLists::isPlayListASerie($_REQUEST['playlists_id']);
         if (!empty($video)) {
             $videos_id = $video['id'];
@@ -4375,22 +4394,7 @@ function getVideoIDFromURL($url) {
     if (preg_match("/v=([0-9]+)/", $url, $matches)) {
         return intval($matches[1]);
     }
-    if (preg_match('/\/video\/([0-9]+)/', $url, $matches)) {
-        return intval($matches[1]);
-    }
-    if (preg_match('/\/videoEmbed\/([0-9]+)/', $url, $matches)) {
-        return intval($matches[1]);
-    }
-    if (preg_match('/\/v\/([0-9]+)/', $url, $matches)) {
-        return intval($matches[1]);
-    }
-    if (preg_match('/\/vEmbed\/([0-9]+)/', $url, $matches)) {
-        return intval($matches[1]);
-    }
-    if (preg_match('/\/article\/([0-9]+)/', $url, $matches)) {
-        return intval($matches[1]);
-    }
-    if (preg_match('/\/articleEmbed\/([0-9]+)/', $url, $matches)) {
+    if (preg_match('/\/(video|videoEmbed|v|vEmbed|article|articleEmbed)\/([0-9]+)/', $url, $matches)) {
         return intval($matches[1]);
     }
     if (AVideoPlugin::isEnabledByName('PlayLists')) {
@@ -4401,6 +4405,12 @@ function getVideoIDFromURL($url) {
                 return $video['id'];
             }
         }
+    }
+    if (preg_match("/v=(\.[0-9a-zA-Z_-]+)/", $url, $matches)) {
+        return hashToID($matches[1]);
+    }
+    if (preg_match('/\/(video|videoEmbed|v|vEmbed|article|articleEmbed)\/(\.[0-9a-zA-Z_-]+)/', $url, $matches)) {
+        return hashToID($matches[2]);
     }
     return false;
 }
@@ -6028,7 +6038,7 @@ function pathToRemoteURL($filename, $forceHTTP = false) {
 
 function getFilenameFromPath($path) {
     global $global;
-    $fileName = Video::getCleanFilenameFromFile($fileName);
+    $fileName = Video::getCleanFilenameFromFile($path);
     return $fileName;
 }
 
@@ -6628,7 +6638,15 @@ function fixPath($path, $addLastSlash = false) {
 }
 
 function idToHash($id) {
-    global $global;
+    global $global, $_idToHash;
+    
+    if(!isset($_idToHash)){
+        $_idToHash = array();
+    }
+    
+    if(!empty($_idToHash[$id])){
+        return $_idToHash[$id];
+    }
 
     if (!empty($global['useLongHash'])) {
         $base = 2;
@@ -6637,13 +6655,16 @@ function idToHash($id) {
         $base = 32;
         $cipher_algo = 'rc4';
     }
-
-    $id = base_convert($id, 10, $base);
-    $hash = (openssl_encrypt($id, $cipher_algo, $global['salt']));
+    if(empty($global['salt'])){
+        $global['salt'] = '11234567890abcdef';
+    }
+    $idConverted = base_convert($id, 10, $base);
+    $hash = (@openssl_encrypt($idConverted, $cipher_algo, $global['salt']));
     //$hash = preg_replace('/^([+]+)/', '', $hash);
     $hash = preg_replace('/(=+)$/', '', $hash);
     $hash = str_replace(array('/', '+', '='), array('_', '-', '.'), $hash);
     //return base64_encode($hash);
+    $_idToHash[$id] = $hash;
     return $hash;
 }
 
@@ -6891,4 +6912,24 @@ function optimizeJS($html) {
         _file_put_contents($filename, $js);
     }
     return str_replace('</body>', '<!-- optimized JS -->' . PHP_EOL . $HTMLTag . PHP_EOL . '</body>', $html);
+}
+
+function mysqlBeginTransaction(){
+    global $global;
+    _error_log('Begin transaction '. getSelfURI());
+    $global['mysqli']->autocommit(false);
+}
+
+function mysqlRollback(){
+    global $global;
+    _error_log('Rollback transaction '. getSelfURI(), AVideoLog::$ERROR);
+    $global['mysqli']->rollback();
+    $global['mysqli']->autocommit(true);
+}
+
+function mysqlCommit(){
+    global $global;
+    _error_log('Commit transaction '. getSelfURI());
+    $global['mysqli']->commit();
+    $global['mysqli']->autocommit(true);
 }

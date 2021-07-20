@@ -11,17 +11,21 @@ if(is_object($video)){
 }
 $custom = array();
 
-if (file_exists($extraPluginFile) && AVideoPlugin::isEnabled("c4fe1b83-8f5a-4d1b-b912-172c608bf9e3")) {
+$customizePluginDescription = '';
+if (file_exists($extraPluginFile) && AVideoPlugin::isEnabledByName("Customize")) {
     require_once $extraPluginFile;
     $ec = new ExtraConfig();
-    $custom[] = $ec->getDescription();
+    $customizePluginDescription = $ec->getDescription();
+    $custom[] = $customizePluginDescription;
 }
 
 if (!empty($poster)) {
     $subTitle = str_replace(array('"', "\n", "\r"), array("", "", ""), strip_tags($video['description']));
     $custom = array();
     $custom[] = $subTitle;
-    $custom[] = $video["category"];
+    if(!empty($video["category"])){
+        $custom[] = $video["category"];
+    }
 }
 
 if (!empty($_GET['catName'])) {
@@ -83,6 +87,7 @@ $cssFiles = array();
 $cssFiles[] = "view/bootstrap/bootstrapSelectPicker/css/bootstrap-select.min.css";
 $cssFiles[] = "view/js/bootgrid/jquery.bootgrid.css";
 $cssFiles[] = "view/js/jquery-toast/jquery.toast.min.css";
+$cssFiles[] = "view/bootstrap/jquery-bootstrap-scrolling-tabs/jquery.scrolling-tabs.min.css";
 //$cssFiles[] = "view/css/custom/{$theme}.css";
 $cssFiles = array_merge($cssFiles);
 $cssURL = combineFiles($cssFiles, "css");

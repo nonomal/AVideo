@@ -353,6 +353,10 @@ abstract class PluginAbstract {
     public function navBar() {
         return "";
     }
+    
+    public function navBarAfter() {
+        return "";
+    }
 
     public function isReady($pluginsList) {
         $return = array('ready' => array(), 'missing' => array());
@@ -685,6 +689,10 @@ abstract class PluginAbstract {
         $p = new Plugin($pluginDB['id']);
         $p->setObject_data(json_encode($pluginDO));
         return $p->save();
+    }
+    
+    public function getWalletConfigurationHTML($users_id, $wallet, $walletDataObject) {
+        return "";
     }
 }
 
