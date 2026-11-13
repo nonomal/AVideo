@@ -21,13 +21,30 @@ class DiscoverConnectionProfileRequest extends \Google\Model
 {
   protected $connectionProfileType = ConnectionProfile::class;
   protected $connectionProfileDataType = '';
+  /**
+   * @var string
+   */
   public $connectionProfileName;
+  /**
+   * @var bool
+   */
+  public $fullHierarchy;
+  /**
+   * @var int
+   */
+  public $hierarchyDepth;
+  protected $mongodbClusterType = MongodbCluster::class;
+  protected $mongodbClusterDataType = '';
   protected $mysqlRdbmsType = MysqlRdbms::class;
   protected $mysqlRdbmsDataType = '';
   protected $oracleRdbmsType = OracleRdbms::class;
   protected $oracleRdbmsDataType = '';
-  public $recursionDepth;
-  public $recursive;
+  protected $postgresqlRdbmsType = PostgresqlRdbms::class;
+  protected $postgresqlRdbmsDataType = '';
+  protected $salesforceOrgType = SalesforceOrg::class;
+  protected $salesforceOrgDataType = '';
+  protected $sqlServerRdbmsType = SqlServerRdbms::class;
+  protected $sqlServerRdbmsDataType = '';
 
   /**
    * @param ConnectionProfile
@@ -43,13 +60,61 @@ class DiscoverConnectionProfileRequest extends \Google\Model
   {
     return $this->connectionProfile;
   }
+  /**
+   * @param string
+   */
   public function setConnectionProfileName($connectionProfileName)
   {
     $this->connectionProfileName = $connectionProfileName;
   }
+  /**
+   * @return string
+   */
   public function getConnectionProfileName()
   {
     return $this->connectionProfileName;
+  }
+  /**
+   * @param bool
+   */
+  public function setFullHierarchy($fullHierarchy)
+  {
+    $this->fullHierarchy = $fullHierarchy;
+  }
+  /**
+   * @return bool
+   */
+  public function getFullHierarchy()
+  {
+    return $this->fullHierarchy;
+  }
+  /**
+   * @param int
+   */
+  public function setHierarchyDepth($hierarchyDepth)
+  {
+    $this->hierarchyDepth = $hierarchyDepth;
+  }
+  /**
+   * @return int
+   */
+  public function getHierarchyDepth()
+  {
+    return $this->hierarchyDepth;
+  }
+  /**
+   * @param MongodbCluster
+   */
+  public function setMongodbCluster(MongodbCluster $mongodbCluster)
+  {
+    $this->mongodbCluster = $mongodbCluster;
+  }
+  /**
+   * @return MongodbCluster
+   */
+  public function getMongodbCluster()
+  {
+    return $this->mongodbCluster;
   }
   /**
    * @param MysqlRdbms
@@ -79,21 +144,47 @@ class DiscoverConnectionProfileRequest extends \Google\Model
   {
     return $this->oracleRdbms;
   }
-  public function setRecursionDepth($recursionDepth)
+  /**
+   * @param PostgresqlRdbms
+   */
+  public function setPostgresqlRdbms(PostgresqlRdbms $postgresqlRdbms)
   {
-    $this->recursionDepth = $recursionDepth;
+    $this->postgresqlRdbms = $postgresqlRdbms;
   }
-  public function getRecursionDepth()
+  /**
+   * @return PostgresqlRdbms
+   */
+  public function getPostgresqlRdbms()
   {
-    return $this->recursionDepth;
+    return $this->postgresqlRdbms;
   }
-  public function setRecursive($recursive)
+  /**
+   * @param SalesforceOrg
+   */
+  public function setSalesforceOrg(SalesforceOrg $salesforceOrg)
   {
-    $this->recursive = $recursive;
+    $this->salesforceOrg = $salesforceOrg;
   }
-  public function getRecursive()
+  /**
+   * @return SalesforceOrg
+   */
+  public function getSalesforceOrg()
   {
-    return $this->recursive;
+    return $this->salesforceOrg;
+  }
+  /**
+   * @param SqlServerRdbms
+   */
+  public function setSqlServerRdbms(SqlServerRdbms $sqlServerRdbms)
+  {
+    $this->sqlServerRdbms = $sqlServerRdbms;
+  }
+  /**
+   * @return SqlServerRdbms
+   */
+  public function getSqlServerRdbms()
+  {
+    return $this->sqlServerRdbms;
   }
 }
 

@@ -19,21 +19,57 @@ namespace Google\Service\RecaptchaEnterprise;
 
 class GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership extends \Google\Model
 {
+  /**
+   * @var string
+   */
+  public $accountId;
+  /**
+   * @var string
+   */
   public $hashedAccountId;
+  /**
+   * @var string
+   */
   public $name;
 
+  /**
+   * @param string
+   */
+  public function setAccountId($accountId)
+  {
+    $this->accountId = $accountId;
+  }
+  /**
+   * @return string
+   */
+  public function getAccountId()
+  {
+    return $this->accountId;
+  }
+  /**
+   * @param string
+   */
   public function setHashedAccountId($hashedAccountId)
   {
     $this->hashedAccountId = $hashedAccountId;
   }
+  /**
+   * @return string
+   */
   public function getHashedAccountId()
   {
     return $this->hashedAccountId;
   }
+  /**
+   * @param string
+   */
   public function setName($name)
   {
     $this->name = $name;
   }
+  /**
+   * @return string
+   */
   public function getName()
   {
     return $this->name;

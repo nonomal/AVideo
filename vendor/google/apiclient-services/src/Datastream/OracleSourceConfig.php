@@ -19,38 +19,138 @@ namespace Google\Service\Datastream;
 
 class OracleSourceConfig extends \Google\Model
 {
-  protected $allowlistType = OracleRdbms::class;
-  protected $allowlistDataType = '';
-  protected $rejectlistType = OracleRdbms::class;
-  protected $rejectlistDataType = '';
+  protected $binaryLogParserType = BinaryLogParser::class;
+  protected $binaryLogParserDataType = '';
+  protected $dropLargeObjectsType = DropLargeObjects::class;
+  protected $dropLargeObjectsDataType = '';
+  protected $excludeObjectsType = OracleRdbms::class;
+  protected $excludeObjectsDataType = '';
+  protected $includeObjectsType = OracleRdbms::class;
+  protected $includeObjectsDataType = '';
+  protected $logMinerType = LogMiner::class;
+  protected $logMinerDataType = '';
+  /**
+   * @var int
+   */
+  public $maxConcurrentBackfillTasks;
+  /**
+   * @var int
+   */
+  public $maxConcurrentCdcTasks;
+  protected $streamLargeObjectsType = StreamLargeObjects::class;
+  protected $streamLargeObjectsDataType = '';
 
   /**
+   * @param BinaryLogParser
+   */
+  public function setBinaryLogParser(BinaryLogParser $binaryLogParser)
+  {
+    $this->binaryLogParser = $binaryLogParser;
+  }
+  /**
+   * @return BinaryLogParser
+   */
+  public function getBinaryLogParser()
+  {
+    return $this->binaryLogParser;
+  }
+  /**
+   * @param DropLargeObjects
+   */
+  public function setDropLargeObjects(DropLargeObjects $dropLargeObjects)
+  {
+    $this->dropLargeObjects = $dropLargeObjects;
+  }
+  /**
+   * @return DropLargeObjects
+   */
+  public function getDropLargeObjects()
+  {
+    return $this->dropLargeObjects;
+  }
+  /**
    * @param OracleRdbms
    */
-  public function setAllowlist(OracleRdbms $allowlist)
+  public function setExcludeObjects(OracleRdbms $excludeObjects)
   {
-    $this->allowlist = $allowlist;
+    $this->excludeObjects = $excludeObjects;
   }
   /**
    * @return OracleRdbms
    */
-  public function getAllowlist()
+  public function getExcludeObjects()
   {
-    return $this->allowlist;
+    return $this->excludeObjects;
   }
   /**
    * @param OracleRdbms
    */
-  public function setRejectlist(OracleRdbms $rejectlist)
+  public function setIncludeObjects(OracleRdbms $includeObjects)
   {
-    $this->rejectlist = $rejectlist;
+    $this->includeObjects = $includeObjects;
   }
   /**
    * @return OracleRdbms
    */
-  public function getRejectlist()
+  public function getIncludeObjects()
   {
-    return $this->rejectlist;
+    return $this->includeObjects;
+  }
+  /**
+   * @param LogMiner
+   */
+  public function setLogMiner(LogMiner $logMiner)
+  {
+    $this->logMiner = $logMiner;
+  }
+  /**
+   * @return LogMiner
+   */
+  public function getLogMiner()
+  {
+    return $this->logMiner;
+  }
+  /**
+   * @param int
+   */
+  public function setMaxConcurrentBackfillTasks($maxConcurrentBackfillTasks)
+  {
+    $this->maxConcurrentBackfillTasks = $maxConcurrentBackfillTasks;
+  }
+  /**
+   * @return int
+   */
+  public function getMaxConcurrentBackfillTasks()
+  {
+    return $this->maxConcurrentBackfillTasks;
+  }
+  /**
+   * @param int
+   */
+  public function setMaxConcurrentCdcTasks($maxConcurrentCdcTasks)
+  {
+    $this->maxConcurrentCdcTasks = $maxConcurrentCdcTasks;
+  }
+  /**
+   * @return int
+   */
+  public function getMaxConcurrentCdcTasks()
+  {
+    return $this->maxConcurrentCdcTasks;
+  }
+  /**
+   * @param StreamLargeObjects
+   */
+  public function setStreamLargeObjects(StreamLargeObjects $streamLargeObjects)
+  {
+    $this->streamLargeObjects = $streamLargeObjects;
+  }
+  /**
+   * @return StreamLargeObjects
+   */
+  public function getStreamLargeObjects()
+  {
+    return $this->streamLargeObjects;
   }
 }
 

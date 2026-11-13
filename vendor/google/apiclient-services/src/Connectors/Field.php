@@ -19,78 +19,164 @@ namespace Google\Service\Connectors;
 
 class Field extends \Google\Model
 {
+  /**
+   * @var array[]
+   */
   public $additionalDetails;
+  /**
+   * @var string
+   */
   public $dataType;
+  /**
+   * @var array
+   */
   public $defaultValue;
+  /**
+   * @var string
+   */
   public $description;
-  public $field;
+  protected $jsonSchemaType = JsonSchema::class;
+  protected $jsonSchemaDataType = '';
+  /**
+   * @var bool
+   */
   public $key;
+  /**
+   * @var string
+   */
+  public $name;
+  /**
+   * @var bool
+   */
   public $nullable;
-  public $readonly;
+  protected $referenceType = Reference::class;
+  protected $referenceDataType = '';
 
+  /**
+   * @param array[]
+   */
   public function setAdditionalDetails($additionalDetails)
   {
     $this->additionalDetails = $additionalDetails;
   }
+  /**
+   * @return array[]
+   */
   public function getAdditionalDetails()
   {
     return $this->additionalDetails;
   }
+  /**
+   * @param string
+   */
   public function setDataType($dataType)
   {
     $this->dataType = $dataType;
   }
+  /**
+   * @return string
+   */
   public function getDataType()
   {
     return $this->dataType;
   }
+  /**
+   * @param array
+   */
   public function setDefaultValue($defaultValue)
   {
     $this->defaultValue = $defaultValue;
   }
+  /**
+   * @return array
+   */
   public function getDefaultValue()
   {
     return $this->defaultValue;
   }
+  /**
+   * @param string
+   */
   public function setDescription($description)
   {
     $this->description = $description;
   }
+  /**
+   * @return string
+   */
   public function getDescription()
   {
     return $this->description;
   }
-  public function setField($field)
+  /**
+   * @param JsonSchema
+   */
+  public function setJsonSchema(JsonSchema $jsonSchema)
   {
-    $this->field = $field;
+    $this->jsonSchema = $jsonSchema;
   }
-  public function getField()
+  /**
+   * @return JsonSchema
+   */
+  public function getJsonSchema()
   {
-    return $this->field;
+    return $this->jsonSchema;
   }
+  /**
+   * @param bool
+   */
   public function setKey($key)
   {
     $this->key = $key;
   }
+  /**
+   * @return bool
+   */
   public function getKey()
   {
     return $this->key;
   }
+  /**
+   * @param string
+   */
+  public function setName($name)
+  {
+    $this->name = $name;
+  }
+  /**
+   * @return string
+   */
+  public function getName()
+  {
+    return $this->name;
+  }
+  /**
+   * @param bool
+   */
   public function setNullable($nullable)
   {
     $this->nullable = $nullable;
   }
+  /**
+   * @return bool
+   */
   public function getNullable()
   {
     return $this->nullable;
   }
-  public function setReadonly($readonly)
+  /**
+   * @param Reference
+   */
+  public function setReference(Reference $reference)
   {
-    $this->readonly = $readonly;
+    $this->reference = $reference;
   }
-  public function getReadonly()
+  /**
+   * @return Reference
+   */
+  public function getReference()
   {
-    return $this->readonly;
+    return $this->reference;
   }
 }
 

@@ -23,11 +23,12 @@ use Google\Client;
  * Service definition for VMMigrationService (v1).
  *
  * <p>
- * Use the Migrate for Compute Engine API to programmatically migrate workloads.</p>
+ * Use the Migrate to Virtual Machines API to programmatically migrate
+ * workloads.</p>
  *
  * <p>
  * For more information about this service, see the API
- * <a href="https://cloud.google.com/migrate/compute-engine" target="_blank">Documentation</a>
+ * <a href="https://cloud.google.com/migrate/virtual-machines" target="_blank">Documentation</a>
  * </p>
  *
  * @author Google, Inc.
@@ -40,14 +41,18 @@ class VMMigrationService extends \Google\Service
 
   public $projects_locations;
   public $projects_locations_groups;
+  public $projects_locations_imageImports;
+  public $projects_locations_imageImports_imageImportJobs;
   public $projects_locations_operations;
   public $projects_locations_sources;
   public $projects_locations_sources_datacenterConnectors;
   public $projects_locations_sources_migratingVms;
   public $projects_locations_sources_migratingVms_cloneJobs;
   public $projects_locations_sources_migratingVms_cutoverJobs;
+  public $projects_locations_sources_migratingVms_replicationCycles;
   public $projects_locations_sources_utilizationReports;
   public $projects_locations_targetProjects;
+  public $rootUrlTemplate;
 
   /**
    * Constructs the internal representation of the VMMigrationService service.
@@ -60,6 +65,7 @@ class VMMigrationService extends \Google\Service
   {
     parent::__construct($clientOrConfig);
     $this->rootUrl = $rootUrl ?: 'https://vmmigration.googleapis.com/';
+    $this->rootUrlTemplate = $rootUrl ?: 'https://vmmigration.UNIVERSE_DOMAIN/';
     $this->servicePath = '';
     $this->batchPath = 'batch';
     $this->version = 'v1';
@@ -89,6 +95,11 @@ class VMMigrationService extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'extraLocationTypes' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
                 ],
                 'filter' => [
                   'location' => 'query',
@@ -223,6 +234,140 @@ class VMMigrationService extends \Google\Service
           ]
         ]
     );
+    $this->projects_locations_imageImports = new VMMigrationService\Resource\ProjectsLocationsImageImports(
+        $this,
+        $this->serviceName,
+        'imageImports',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/imageImports',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'imageImportId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'requestId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/imageImports',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_locations_imageImports_imageImportJobs = new VMMigrationService\Resource\ProjectsLocationsImageImportsImageImportJobs(
+        $this,
+        $this->serviceName,
+        'imageImportJobs',
+        [
+          'methods' => [
+            'cancel' => [
+              'path' => 'v1/{+name}:cancel',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/imageImportJobs',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->projects_locations_operations = new VMMigrationService\Resource\ProjectsLocationsOperations(
         $this,
         $this->serviceName,
@@ -335,6 +480,14 @@ class VMMigrationService extends \Google\Service
                 'forceRefresh' => [
                   'location' => 'query',
                   'type' => 'boolean',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],'get' => [
@@ -469,6 +622,16 @@ class VMMigrationService extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'upgradeAppliance' => [
+              'path' => 'v1/{+datacenterConnector}:upgradeAppliance',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'datacenterConnector' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],
           ]
         ]
@@ -507,6 +670,16 @@ class VMMigrationService extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'extendMigration' => [
+              'path' => 'v1/{+migratingVm}:extendMigration',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'migratingVm' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'finalizeMigration' => [
               'path' => 'v1/{+migratingVm}:finalizeMigration',
               'httpMethod' => 'POST',
@@ -525,6 +698,10 @@ class VMMigrationService extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'view' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],'list' => [
@@ -549,6 +726,10 @@ class VMMigrationService extends \Google\Service
                   'type' => 'integer',
                 ],
                 'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'view' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -725,6 +906,52 @@ class VMMigrationService extends \Google\Service
               ],
             ],'list' => [
               'path' => 'v1/{+parent}/cutoverJobs',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_locations_sources_migratingVms_replicationCycles = new VMMigrationService\Resource\ProjectsLocationsSourcesMigratingVmsReplicationCycles(
+        $this,
+        $this->serviceName,
+        'replicationCycles',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/replicationCycles',
               'httpMethod' => 'GET',
               'parameters' => [
                 'parent' => [

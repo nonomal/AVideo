@@ -17,23 +17,64 @@
 
 namespace Google\Service\AuthorizedBuyersMarketplace;
 
-class Deal extends \Google\Model
+class Deal extends \Google\Collection
 {
+  protected $collection_key = 'eligibleSeatIds';
+  /**
+   * @var string
+   */
   public $billedBuyer;
+  /**
+   * @var string
+   */
   public $buyer;
+  /**
+   * @var string
+   */
+  public $buyerPermissionType;
+  /**
+   * @var string
+   */
   public $client;
+  /**
+   * @var string
+   */
   public $createTime;
   protected $creativeRequirementsType = CreativeRequirements::class;
   protected $creativeRequirementsDataType = '';
+  /**
+   * @var string
+   */
   public $dealType;
   protected $deliveryControlType = DeliveryControl::class;
   protected $deliveryControlDataType = '';
+  /**
+   * @var string
+   */
   public $description;
+  /**
+   * @var string
+   */
   public $displayName;
+  /**
+   * @var string[]
+   */
+  public $eligibleSeatIds;
   protected $estimatedGrossSpendType = Money::class;
   protected $estimatedGrossSpendDataType = '';
+  /**
+   * @var string
+   */
   public $flightEndTime;
+  /**
+   * @var string
+   */
   public $flightStartTime;
+  protected $mediaPlannerType = MediaPlanner::class;
+  protected $mediaPlannerDataType = '';
+  /**
+   * @var string
+   */
   public $name;
   protected $preferredDealTermsType = PreferredDealTerms::class;
   protected $preferredDealTermsDataType = '';
@@ -41,42 +82,89 @@ class Deal extends \Google\Model
   protected $privateAuctionTermsDataType = '';
   protected $programmaticGuaranteedTermsType = ProgrammaticGuaranteedTerms::class;
   protected $programmaticGuaranteedTermsDataType = '';
+  /**
+   * @var string
+   */
   public $proposalRevision;
+  /**
+   * @var string
+   */
   public $publisherProfile;
   protected $sellerTimeZoneType = TimeZone::class;
   protected $sellerTimeZoneDataType = '';
   protected $targetingType = MarketplaceTargeting::class;
   protected $targetingDataType = '';
+  /**
+   * @var string
+   */
   public $updateTime;
 
+  /**
+   * @param string
+   */
   public function setBilledBuyer($billedBuyer)
   {
     $this->billedBuyer = $billedBuyer;
   }
+  /**
+   * @return string
+   */
   public function getBilledBuyer()
   {
     return $this->billedBuyer;
   }
+  /**
+   * @param string
+   */
   public function setBuyer($buyer)
   {
     $this->buyer = $buyer;
   }
+  /**
+   * @return string
+   */
   public function getBuyer()
   {
     return $this->buyer;
   }
+  /**
+   * @param string
+   */
+  public function setBuyerPermissionType($buyerPermissionType)
+  {
+    $this->buyerPermissionType = $buyerPermissionType;
+  }
+  /**
+   * @return string
+   */
+  public function getBuyerPermissionType()
+  {
+    return $this->buyerPermissionType;
+  }
+  /**
+   * @param string
+   */
   public function setClient($client)
   {
     $this->client = $client;
   }
+  /**
+   * @return string
+   */
   public function getClient()
   {
     return $this->client;
   }
+  /**
+   * @param string
+   */
   public function setCreateTime($createTime)
   {
     $this->createTime = $createTime;
   }
+  /**
+   * @return string
+   */
   public function getCreateTime()
   {
     return $this->createTime;
@@ -95,10 +183,16 @@ class Deal extends \Google\Model
   {
     return $this->creativeRequirements;
   }
+  /**
+   * @param string
+   */
   public function setDealType($dealType)
   {
     $this->dealType = $dealType;
   }
+  /**
+   * @return string
+   */
   public function getDealType()
   {
     return $this->dealType;
@@ -117,21 +211,47 @@ class Deal extends \Google\Model
   {
     return $this->deliveryControl;
   }
+  /**
+   * @param string
+   */
   public function setDescription($description)
   {
     $this->description = $description;
   }
+  /**
+   * @return string
+   */
   public function getDescription()
   {
     return $this->description;
   }
+  /**
+   * @param string
+   */
   public function setDisplayName($displayName)
   {
     $this->displayName = $displayName;
   }
+  /**
+   * @return string
+   */
   public function getDisplayName()
   {
     return $this->displayName;
+  }
+  /**
+   * @param string[]
+   */
+  public function setEligibleSeatIds($eligibleSeatIds)
+  {
+    $this->eligibleSeatIds = $eligibleSeatIds;
+  }
+  /**
+   * @return string[]
+   */
+  public function getEligibleSeatIds()
+  {
+    return $this->eligibleSeatIds;
   }
   /**
    * @param Money
@@ -147,26 +267,58 @@ class Deal extends \Google\Model
   {
     return $this->estimatedGrossSpend;
   }
+  /**
+   * @param string
+   */
   public function setFlightEndTime($flightEndTime)
   {
     $this->flightEndTime = $flightEndTime;
   }
+  /**
+   * @return string
+   */
   public function getFlightEndTime()
   {
     return $this->flightEndTime;
   }
+  /**
+   * @param string
+   */
   public function setFlightStartTime($flightStartTime)
   {
     $this->flightStartTime = $flightStartTime;
   }
+  /**
+   * @return string
+   */
   public function getFlightStartTime()
   {
     return $this->flightStartTime;
   }
+  /**
+   * @param MediaPlanner
+   */
+  public function setMediaPlanner(MediaPlanner $mediaPlanner)
+  {
+    $this->mediaPlanner = $mediaPlanner;
+  }
+  /**
+   * @return MediaPlanner
+   */
+  public function getMediaPlanner()
+  {
+    return $this->mediaPlanner;
+  }
+  /**
+   * @param string
+   */
   public function setName($name)
   {
     $this->name = $name;
   }
+  /**
+   * @return string
+   */
   public function getName()
   {
     return $this->name;
@@ -213,18 +365,30 @@ class Deal extends \Google\Model
   {
     return $this->programmaticGuaranteedTerms;
   }
+  /**
+   * @param string
+   */
   public function setProposalRevision($proposalRevision)
   {
     $this->proposalRevision = $proposalRevision;
   }
+  /**
+   * @return string
+   */
   public function getProposalRevision()
   {
     return $this->proposalRevision;
   }
+  /**
+   * @param string
+   */
   public function setPublisherProfile($publisherProfile)
   {
     $this->publisherProfile = $publisherProfile;
   }
+  /**
+   * @return string
+   */
   public function getPublisherProfile()
   {
     return $this->publisherProfile;
@@ -257,10 +421,16 @@ class Deal extends \Google\Model
   {
     return $this->targeting;
   }
+  /**
+   * @param string
+   */
   public function setUpdateTime($updateTime)
   {
     $this->updateTime = $updateTime;
   }
+  /**
+   * @return string
+   */
   public function getUpdateTime()
   {
     return $this->updateTime;

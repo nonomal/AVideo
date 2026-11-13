@@ -5,9 +5,6 @@ require_once $global['systemRootPath'] . 'plugin/Plugin.abstract.php';
 require_once $global['systemRootPath'] . 'plugin/TopMenu/Objects/Menu.php';
 require_once $global['systemRootPath'] . 'plugin/TopMenu/Objects/MenuItem.php';
 
-use Pecee\SimpleRouter\SimpleRouter; //required if we want to define routes on our plugin.
-
-
 class TopMenu extends PluginAbstract {
     const PERMISSION_CAN_EDIT = 0;
 
@@ -19,7 +16,7 @@ class TopMenu extends PluginAbstract {
     }
     public function getDescription() {
         $txt = "Responsive Customized Top Menu";
-        $help = "<br><small><a href='https://github.com/WWBN/AVideo/wiki/How-to-use-TopMenu-Plug-in' target='__blank'><i class='fas fa-question-circle'></i> Help</a></small>";
+        $help = "<br><small><a href='https://github.com/WWBN/AVideo/wiki/How-to-use-TopMenu-Plug-in' target='_blank'><i class='fas fa-question-circle'></i> Help</a></small>";
         return $txt.$help;
     }
 
@@ -32,7 +29,7 @@ class TopMenu extends PluginAbstract {
     }    
     
     public function getPluginVersion() {
-        return "2.1";   
+        return "2.2";   
     }
     
      public function getEmptyDataObject() {
@@ -40,6 +37,15 @@ class TopMenu extends PluginAbstract {
         
         $obj = new stdClass();
         $obj->show_menu_items = true;
+        
+        $o = new stdClass();
+        $o->type = [0=>'Do not compact top menu'];
+        for ($i = 1; $i <= 10; $i++) {
+            $o->type[$i] = "Compact top menus if it is greater then $i items";
+        }
+        $o->value = 4;
+        $obj->compactMenuIfIsGreaterThen = $o;
+        $obj->showBackToTopButton = true;
         
         return $obj;
      }
@@ -55,20 +61,10 @@ class TopMenu extends PluginAbstract {
         }
         return true;
     }
-    
-    public function addRoutes()
-    {
-        global $basePath; 
-        SimpleRouter::get($basePath."/menu/{menuSeoUrlItem}", function($menuSeoUrlItem) {
-            $_GET['menuSeoUrlItem']=$menuSeoUrlItem;
-            require_once "plugin/TopMenu/seo.php";
-        },['defaultParameterRegex' => '.*']);
-        return false;
-    }
 
     public function getHeadCode() {
         global $global;
-        $css = '<link href="' .getCDN() . 'plugin/TopMenu/style.css" rel="stylesheet" type="text/css"/>';
+        $css = '<link href="' .getURL('plugin/TopMenu/style.css') . '" rel="stylesheet" type="text/css"/>';
         return $css;
     }
     
@@ -91,7 +87,7 @@ class TopMenu extends PluginAbstract {
     public function getidBySeoUrl($menuSeoUrlItem) {
         global $global;
         $sql="select id from topMenu_items where menuSeoUrlItem= ?"; 
-        $res=sqlDal::readSql($sql, "s", array($global['mysqli']->real_escape_string($menuSeoUrlItem)));
+        $res=sqlDal::readSql($sql, "s", array(($menuSeoUrlItem)));
         $menuId=sqlDAL::fetchAssoc($res);
         if(!isset($menuId['id']))
         return false;
@@ -130,10 +126,12 @@ class TopMenu extends PluginAbstract {
         return "menu_url_{$menu_item_id}";
     }
     
-
     static function setVideoMenuURL($videos_id, $menu_item_id, $url) {
-        $video = new Video('', '', $videos_id);
-        $externalOptions = _json_decode($video->getExternalOptions());        
+        $video = new Video('', '', $videos_id, true);
+        $externalOptions = _json_decode($video->getExternalOptions()); 
+        if(!is_object($externalOptions)){
+            $externalOptions = new stdClass();
+        }      
         $parameterName = self::getExternalOptionName($menu_item_id);
         $externalOptions->$parameterName = $url;
         $video->setExternalOptions(json_encode($externalOptions));
@@ -203,6 +201,20 @@ class TopMenu extends PluginAbstract {
         $btn .= '<button type="button" class="btn btn-primary btn-light btn-sm btn-xs btn-block" onclick="avideoModalIframeSmall(webSiteRootURL+\\\'plugin/TopMenu/addVideoInfo.php?videos_id=\'+row.id+\'\\\');" ><i class="fas fa-edit"></i> Menu items</button>';
 
         return $btn;
+    }
+
+    public function getFooterCode(){
+        global $global;
+        
+        $obj = $this->getDataObject();
+
+        if(!isIframe() && !isEmbed()){
+            echo '<link href="' . getURL('plugin/TopMenu/float.css') . '" rel="stylesheet" type="text/css"/>';
+            if($obj->showBackToTopButton){
+                include $global['systemRootPath'] . 'plugin/TopMenu/floatBackToTop.php';    
+            }
+            include $global['systemRootPath'] . 'plugin/TopMenu/floatMenu.php';
+        }
     }
     
 }

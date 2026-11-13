@@ -19,12 +19,57 @@ namespace Google\Service\Container;
 
 class AdvancedMachineFeatures extends \Google\Model
 {
+  /**
+   * @var bool
+   */
+  public $enableNestedVirtualization;
+  /**
+   * @var string
+   */
+  public $performanceMonitoringUnit;
+  /**
+   * @var string
+   */
   public $threadsPerCore;
 
+  /**
+   * @param bool
+   */
+  public function setEnableNestedVirtualization($enableNestedVirtualization)
+  {
+    $this->enableNestedVirtualization = $enableNestedVirtualization;
+  }
+  /**
+   * @return bool
+   */
+  public function getEnableNestedVirtualization()
+  {
+    return $this->enableNestedVirtualization;
+  }
+  /**
+   * @param string
+   */
+  public function setPerformanceMonitoringUnit($performanceMonitoringUnit)
+  {
+    $this->performanceMonitoringUnit = $performanceMonitoringUnit;
+  }
+  /**
+   * @return string
+   */
+  public function getPerformanceMonitoringUnit()
+  {
+    return $this->performanceMonitoringUnit;
+  }
+  /**
+   * @param string
+   */
   public function setThreadsPerCore($threadsPerCore)
   {
     $this->threadsPerCore = $threadsPerCore;
   }
+  /**
+   * @return string
+   */
   public function getThreadsPerCore()
   {
     return $this->threadsPerCore;

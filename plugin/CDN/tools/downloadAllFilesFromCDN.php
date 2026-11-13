@@ -1,8 +1,6 @@
 <?php
-
 $config = dirname(__FILE__) . '/../../../videos/configuration.php';
 require_once $config;
-error_reporting(E_ALL);
 
 if (!isCommandLineInterface()) {
     return die('Command Line only');
@@ -27,7 +25,7 @@ $countSiteIdEmpty = 0;
 $countStatusNotActive = 0;
 $countMoved = 0;
 
-$sites_id_to_move = array();
+$sites_id_to_move = [];
 
 foreach ($videos as $value) {
     $count++;
@@ -37,7 +35,7 @@ foreach ($videos as $value) {
         //echo "sites_id is not empty {$value['sites_id']}" . PHP_EOL;
         continue;
     }
-    if ($value['status'] !== Video::$statusActive) {
+    if ($value['status'] !== Video::STATUS_ACTIVE) {
         $countStatusNotActive++;
         //echo "The video status is not active {$value['status']}" . PHP_EOL;
         continue;
@@ -53,9 +51,9 @@ foreach ($sites_id_to_move as $key => $value) {
     $startF = microtime(true);
     //$response = CDNStorage::get($value, 10);
     $response = CDNStorage::moveRemoteToLocal($value, false, false);
-    if(empty($response)){
+    if (empty($response)) {
         echo "{$key}/{$total} ERROR " . PHP_EOL;
-    }else{
+    } else {
         $endF = microtime(true) - $startF;
         $ETA = ($total - $key + 1) * $endF;
         $ps = humanFileSize($response['totalBytesTransferred'] / ($endF));
@@ -66,4 +64,3 @@ foreach ($sites_id_to_move as $key => $value) {
 echo "SiteIdNotEmpty = $countSiteIdEmpty; StatusNotActive=$countStatusNotActive; Moved=$countMoved;" . PHP_EOL;
 echo PHP_EOL . " Done! " . PHP_EOL;
 die();
-

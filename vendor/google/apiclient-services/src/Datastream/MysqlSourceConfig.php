@@ -19,38 +19,106 @@ namespace Google\Service\Datastream;
 
 class MysqlSourceConfig extends \Google\Model
 {
-  protected $allowlistType = MysqlRdbms::class;
-  protected $allowlistDataType = '';
-  protected $rejectlistType = MysqlRdbms::class;
-  protected $rejectlistDataType = '';
+  protected $binaryLogPositionType = BinaryLogPosition::class;
+  protected $binaryLogPositionDataType = '';
+  protected $excludeObjectsType = MysqlRdbms::class;
+  protected $excludeObjectsDataType = '';
+  protected $gtidType = Gtid::class;
+  protected $gtidDataType = '';
+  protected $includeObjectsType = MysqlRdbms::class;
+  protected $includeObjectsDataType = '';
+  /**
+   * @var int
+   */
+  public $maxConcurrentBackfillTasks;
+  /**
+   * @var int
+   */
+  public $maxConcurrentCdcTasks;
 
   /**
+   * @param BinaryLogPosition
+   */
+  public function setBinaryLogPosition(BinaryLogPosition $binaryLogPosition)
+  {
+    $this->binaryLogPosition = $binaryLogPosition;
+  }
+  /**
+   * @return BinaryLogPosition
+   */
+  public function getBinaryLogPosition()
+  {
+    return $this->binaryLogPosition;
+  }
+  /**
    * @param MysqlRdbms
    */
-  public function setAllowlist(MysqlRdbms $allowlist)
+  public function setExcludeObjects(MysqlRdbms $excludeObjects)
   {
-    $this->allowlist = $allowlist;
+    $this->excludeObjects = $excludeObjects;
   }
   /**
    * @return MysqlRdbms
    */
-  public function getAllowlist()
+  public function getExcludeObjects()
   {
-    return $this->allowlist;
+    return $this->excludeObjects;
+  }
+  /**
+   * @param Gtid
+   */
+  public function setGtid(Gtid $gtid)
+  {
+    $this->gtid = $gtid;
+  }
+  /**
+   * @return Gtid
+   */
+  public function getGtid()
+  {
+    return $this->gtid;
   }
   /**
    * @param MysqlRdbms
    */
-  public function setRejectlist(MysqlRdbms $rejectlist)
+  public function setIncludeObjects(MysqlRdbms $includeObjects)
   {
-    $this->rejectlist = $rejectlist;
+    $this->includeObjects = $includeObjects;
   }
   /**
    * @return MysqlRdbms
    */
-  public function getRejectlist()
+  public function getIncludeObjects()
   {
-    return $this->rejectlist;
+    return $this->includeObjects;
+  }
+  /**
+   * @param int
+   */
+  public function setMaxConcurrentBackfillTasks($maxConcurrentBackfillTasks)
+  {
+    $this->maxConcurrentBackfillTasks = $maxConcurrentBackfillTasks;
+  }
+  /**
+   * @return int
+   */
+  public function getMaxConcurrentBackfillTasks()
+  {
+    return $this->maxConcurrentBackfillTasks;
+  }
+  /**
+   * @param int
+   */
+  public function setMaxConcurrentCdcTasks($maxConcurrentCdcTasks)
+  {
+    $this->maxConcurrentCdcTasks = $maxConcurrentCdcTasks;
+  }
+  /**
+   * @return int
+   */
+  public function getMaxConcurrentCdcTasks()
+  {
+    return $this->maxConcurrentCdcTasks;
   }
 }
 

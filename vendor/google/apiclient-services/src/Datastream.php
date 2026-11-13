@@ -20,7 +20,7 @@ namespace Google\Service;
 use Google\Client;
 
 /**
- * Service definition for Datastream (v1alpha1).
+ * Service definition for Datastream (v1).
  *
  * <p>
 </p>
@@ -44,6 +44,8 @@ class Datastream extends \Google\Service
   public $projects_locations_privateConnections;
   public $projects_locations_privateConnections_routes;
   public $projects_locations_streams;
+  public $projects_locations_streams_objects;
+  public $rootUrlTemplate;
 
   /**
    * Constructs the internal representation of the Datastream service.
@@ -56,9 +58,10 @@ class Datastream extends \Google\Service
   {
     parent::__construct($clientOrConfig);
     $this->rootUrl = $rootUrl ?: 'https://datastream.googleapis.com/';
+    $this->rootUrlTemplate = $rootUrl ?: 'https://datastream.UNIVERSE_DOMAIN/';
     $this->servicePath = '';
     $this->batchPath = 'batch';
-    $this->version = 'v1alpha1';
+    $this->version = 'v1';
     $this->serviceName = 'datastream';
 
     $this->projects_locations = new Datastream\Resource\ProjectsLocations(
@@ -68,7 +71,7 @@ class Datastream extends \Google\Service
         [
           'methods' => [
             'fetchStaticIps' => [
-              'path' => 'v1alpha1/{+name}:fetchStaticIps',
+              'path' => 'v1/{+name}:fetchStaticIps',
               'httpMethod' => 'GET',
               'parameters' => [
                 'name' => [
@@ -86,7 +89,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'get' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [
                 'name' => [
@@ -96,13 +99,18 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'list' => [
-              'path' => 'v1alpha1/{+name}/locations',
+              'path' => 'v1/{+name}/locations',
               'httpMethod' => 'GET',
               'parameters' => [
                 'name' => [
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'extraLocationTypes' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
                 ],
                 'filter' => [
                   'location' => 'query',
@@ -128,7 +136,7 @@ class Datastream extends \Google\Service
         [
           'methods' => [
             'create' => [
-              'path' => 'v1alpha1/{+parent}/connectionProfiles',
+              'path' => 'v1/{+parent}/connectionProfiles',
               'httpMethod' => 'POST',
               'parameters' => [
                 'parent' => [
@@ -140,13 +148,21 @@ class Datastream extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'force' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
                 'requestId' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'validateOnly' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
               ],
             ],'delete' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'DELETE',
               'parameters' => [
                 'name' => [
@@ -160,7 +176,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'discover' => [
-              'path' => 'v1alpha1/{+parent}/connectionProfiles:discover',
+              'path' => 'v1/{+parent}/connectionProfiles:discover',
               'httpMethod' => 'POST',
               'parameters' => [
                 'parent' => [
@@ -170,7 +186,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'get' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [
                 'name' => [
@@ -180,7 +196,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'list' => [
-              'path' => 'v1alpha1/{+parent}/connectionProfiles',
+              'path' => 'v1/{+parent}/connectionProfiles',
               'httpMethod' => 'GET',
               'parameters' => [
                 'parent' => [
@@ -206,13 +222,17 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'patch' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'PATCH',
               'parameters' => [
                 'name' => [
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'force' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
                 'requestId' => [
                   'location' => 'query',
@@ -238,7 +258,7 @@ class Datastream extends \Google\Service
         [
           'methods' => [
             'cancel' => [
-              'path' => 'v1alpha1/{+name}:cancel',
+              'path' => 'v1/{+name}:cancel',
               'httpMethod' => 'POST',
               'parameters' => [
                 'name' => [
@@ -248,7 +268,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'delete' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'DELETE',
               'parameters' => [
                 'name' => [
@@ -258,7 +278,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'get' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [
                 'name' => [
@@ -268,7 +288,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'list' => [
-              'path' => 'v1alpha1/{+name}/operations',
+              'path' => 'v1/{+name}/operations',
               'httpMethod' => 'GET',
               'parameters' => [
                 'name' => [
@@ -300,13 +320,17 @@ class Datastream extends \Google\Service
         [
           'methods' => [
             'create' => [
-              'path' => 'v1alpha1/{+parent}/privateConnections',
+              'path' => 'v1/{+parent}/privateConnections',
               'httpMethod' => 'POST',
               'parameters' => [
                 'parent' => [
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'force' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
                 'privateConnectionId' => [
                   'location' => 'query',
@@ -316,9 +340,13 @@ class Datastream extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'validateOnly' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
               ],
             ],'delete' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'DELETE',
               'parameters' => [
                 'name' => [
@@ -336,7 +364,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'get' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [
                 'name' => [
@@ -346,7 +374,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'list' => [
-              'path' => 'v1alpha1/{+parent}/privateConnections',
+              'path' => 'v1/{+parent}/privateConnections',
               'httpMethod' => 'GET',
               'parameters' => [
                 'parent' => [
@@ -382,7 +410,7 @@ class Datastream extends \Google\Service
         [
           'methods' => [
             'create' => [
-              'path' => 'v1alpha1/{+parent}/routes',
+              'path' => 'v1/{+parent}/routes',
               'httpMethod' => 'POST',
               'parameters' => [
                 'parent' => [
@@ -400,7 +428,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'delete' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'DELETE',
               'parameters' => [
                 'name' => [
@@ -414,7 +442,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'get' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [
                 'name' => [
@@ -424,7 +452,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'list' => [
-              'path' => 'v1alpha1/{+parent}/routes',
+              'path' => 'v1/{+parent}/routes',
               'httpMethod' => 'GET',
               'parameters' => [
                 'parent' => [
@@ -460,7 +488,7 @@ class Datastream extends \Google\Service
         [
           'methods' => [
             'create' => [
-              'path' => 'v1alpha1/{+parent}/streams',
+              'path' => 'v1/{+parent}/streams',
               'httpMethod' => 'POST',
               'parameters' => [
                 'parent' => [
@@ -486,7 +514,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'delete' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'DELETE',
               'parameters' => [
                 'name' => [
@@ -499,18 +527,8 @@ class Datastream extends \Google\Service
                   'type' => 'string',
                 ],
               ],
-            ],'fetchErrors' => [
-              'path' => 'v1alpha1/{+stream}:fetchErrors',
-              'httpMethod' => 'POST',
-              'parameters' => [
-                'stream' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-              ],
             ],'get' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [
                 'name' => [
@@ -520,7 +538,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'list' => [
-              'path' => 'v1alpha1/{+parent}/streams',
+              'path' => 'v1/{+parent}/streams',
               'httpMethod' => 'GET',
               'parameters' => [
                 'parent' => [
@@ -546,7 +564,7 @@ class Datastream extends \Google\Service
                 ],
               ],
             ],'patch' => [
-              'path' => 'v1alpha1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'PATCH',
               'parameters' => [
                 'name' => [
@@ -569,6 +587,84 @@ class Datastream extends \Google\Service
                 'validateOnly' => [
                   'location' => 'query',
                   'type' => 'boolean',
+                ],
+              ],
+            ],'run' => [
+              'path' => 'v1/{+name}:run',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_locations_streams_objects = new Datastream\Resource\ProjectsLocationsStreamsObjects(
+        $this,
+        $this->serviceName,
+        'objects',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/objects',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'lookup' => [
+              'path' => 'v1/{+parent}/objects:lookup',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'startBackfillJob' => [
+              'path' => 'v1/{+object}:startBackfillJob',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'object' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'stopBackfillJob' => [
+              'path' => 'v1/{+object}:stopBackfillJob',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'object' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],

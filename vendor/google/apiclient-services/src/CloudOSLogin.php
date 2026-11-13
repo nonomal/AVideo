@@ -49,8 +49,8 @@ class CloudOSLogin extends \Google\Service
 
   public $users;
   public $users_projects;
-  public $users_sshPublicKey;
   public $users_sshPublicKeys;
+  public $rootUrlTemplate;
 
   /**
    * Constructs the internal representation of the CloudOSLogin service.
@@ -63,6 +63,7 @@ class CloudOSLogin extends \Google\Service
   {
     parent::__construct($clientOrConfig);
     $this->rootUrl = $rootUrl ?: 'https://oslogin.googleapis.com/';
+    $this->rootUrlTemplate = $rootUrl ?: 'https://oslogin.UNIVERSE_DOMAIN/';
     $this->servicePath = '';
     $this->batchPath = 'batch';
     $this->version = 'v1';
@@ -105,6 +106,11 @@ class CloudOSLogin extends \Google\Service
                   'location' => 'query',
                   'type' => 'string',
                 ],
+                'regions' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ],
               ],
             ],
           ]
@@ -130,14 +136,14 @@ class CloudOSLogin extends \Google\Service
           ]
         ]
     );
-    $this->users_sshPublicKey = new CloudOSLogin\Resource\UsersSshPublicKey(
+    $this->users_sshPublicKeys = new CloudOSLogin\Resource\UsersSshPublicKeys(
         $this,
         $this->serviceName,
-        'sshPublicKey',
+        'sshPublicKeys',
         [
           'methods' => [
             'create' => [
-              'path' => 'v1/{+parent}/sshPublicKey',
+              'path' => 'v1/{+parent}/sshPublicKeys',
               'httpMethod' => 'POST',
               'parameters' => [
                 'parent' => [
@@ -146,17 +152,7 @@ class CloudOSLogin extends \Google\Service
                   'required' => true,
                 ],
               ],
-            ],
-          ]
-        ]
-    );
-    $this->users_sshPublicKeys = new CloudOSLogin\Resource\UsersSshPublicKeys(
-        $this,
-        $this->serviceName,
-        'sshPublicKeys',
-        [
-          'methods' => [
-            'delete' => [
+            ],'delete' => [
               'path' => 'v1/{+name}',
               'httpMethod' => 'DELETE',
               'parameters' => [

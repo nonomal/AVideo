@@ -19,51 +19,130 @@ namespace Google\Service\Connectors;
 
 class InputParameter extends \Google\Model
 {
+  /**
+   * @var array[]
+   */
+  public $additionalDetails;
+  /**
+   * @var string
+   */
   public $dataType;
+  /**
+   * @var array
+   */
   public $defaultValue;
+  /**
+   * @var string
+   */
   public $description;
+  protected $jsonSchemaType = JsonSchema::class;
+  protected $jsonSchemaDataType = '';
+  /**
+   * @var string
+   */
+  public $name;
+  /**
+   * @var bool
+   */
   public $nullable;
-  public $parameter;
 
+  /**
+   * @param array[]
+   */
+  public function setAdditionalDetails($additionalDetails)
+  {
+    $this->additionalDetails = $additionalDetails;
+  }
+  /**
+   * @return array[]
+   */
+  public function getAdditionalDetails()
+  {
+    return $this->additionalDetails;
+  }
+  /**
+   * @param string
+   */
   public function setDataType($dataType)
   {
     $this->dataType = $dataType;
   }
+  /**
+   * @return string
+   */
   public function getDataType()
   {
     return $this->dataType;
   }
+  /**
+   * @param array
+   */
   public function setDefaultValue($defaultValue)
   {
     $this->defaultValue = $defaultValue;
   }
+  /**
+   * @return array
+   */
   public function getDefaultValue()
   {
     return $this->defaultValue;
   }
+  /**
+   * @param string
+   */
   public function setDescription($description)
   {
     $this->description = $description;
   }
+  /**
+   * @return string
+   */
   public function getDescription()
   {
     return $this->description;
   }
+  /**
+   * @param JsonSchema
+   */
+  public function setJsonSchema(JsonSchema $jsonSchema)
+  {
+    $this->jsonSchema = $jsonSchema;
+  }
+  /**
+   * @return JsonSchema
+   */
+  public function getJsonSchema()
+  {
+    return $this->jsonSchema;
+  }
+  /**
+   * @param string
+   */
+  public function setName($name)
+  {
+    $this->name = $name;
+  }
+  /**
+   * @return string
+   */
+  public function getName()
+  {
+    return $this->name;
+  }
+  /**
+   * @param bool
+   */
   public function setNullable($nullable)
   {
     $this->nullable = $nullable;
   }
+  /**
+   * @return bool
+   */
   public function getNullable()
   {
     return $this->nullable;
-  }
-  public function setParameter($parameter)
-  {
-    $this->parameter = $parameter;
-  }
-  public function getParameter()
-  {
-    return $this->parameter;
   }
 }
 

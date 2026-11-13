@@ -19,14 +19,73 @@ namespace Google\Service\VMMigrationService;
 
 class FetchInventoryResponse extends \Google\Model
 {
+  protected $awsVmsType = AwsVmsDetails::class;
+  protected $awsVmsDataType = '';
+  protected $azureVmsType = AzureVmsDetails::class;
+  protected $azureVmsDataType = '';
+  /**
+   * @var string
+   */
+  public $nextPageToken;
+  /**
+   * @var string
+   */
   public $updateTime;
   protected $vmwareVmsType = VmwareVmsDetails::class;
   protected $vmwareVmsDataType = '';
 
+  /**
+   * @param AwsVmsDetails
+   */
+  public function setAwsVms(AwsVmsDetails $awsVms)
+  {
+    $this->awsVms = $awsVms;
+  }
+  /**
+   * @return AwsVmsDetails
+   */
+  public function getAwsVms()
+  {
+    return $this->awsVms;
+  }
+  /**
+   * @param AzureVmsDetails
+   */
+  public function setAzureVms(AzureVmsDetails $azureVms)
+  {
+    $this->azureVms = $azureVms;
+  }
+  /**
+   * @return AzureVmsDetails
+   */
+  public function getAzureVms()
+  {
+    return $this->azureVms;
+  }
+  /**
+   * @param string
+   */
+  public function setNextPageToken($nextPageToken)
+  {
+    $this->nextPageToken = $nextPageToken;
+  }
+  /**
+   * @return string
+   */
+  public function getNextPageToken()
+  {
+    return $this->nextPageToken;
+  }
+  /**
+   * @param string
+   */
   public function setUpdateTime($updateTime)
   {
     $this->updateTime = $updateTime;
   }
+  /**
+   * @return string
+   */
   public function getUpdateTime()
   {
     return $this->updateTime;
